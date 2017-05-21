@@ -1,11 +1,12 @@
 from flask_transfer import transfer, UploadError
 from werkzeug import FileStorage
 import pytest
+import collections
 
 try:
     from io import BytesIO
 except ImportError:
-    from StringIO import StringIO as BytesIO
+    from io import StringIO as BytesIO
 
 try:
     from unittest import mock
@@ -51,7 +52,7 @@ class ReportingTransfer(transfer.Transfer):
     lambda a: a, BytesIO(), 'dummy/path'
 ])
 def test_make_destination_callable(save_to):
-    assert callable(transfer._make_destination_callable(save_to))
+    assert isinstance(transfer._make_destination_callable(save_to), collections.Callable)
 
 
 def test_make_destination_callable_raises():
@@ -98,7 +99,7 @@ def test_Transfer_setup_blank():
 ])
 def test_Transfer_setup_with_destination(destination):
     t = transfer.Transfer(destination=destination)
-    assert callable(t._destination)
+    assert isinstance(t._destination, collections.Callable)
 
 
 def test_register_validator(transf):
@@ -178,7 +179,7 @@ def test_Transfer_validate_catch_all_errors(transf):
 
 
 def test_Transfer_validate_bail_on_first_error(transf):
-    counter = iter(range(2))
+    counter = iter(list(range(2)))
 
     @transf.validator
     @transf.validator

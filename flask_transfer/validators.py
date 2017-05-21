@@ -212,7 +212,7 @@ class ExtValidator(BaseValidator):
     Checked extensions should not have the dot included in them.
     """
     def __init__(self, *exts):
-        self.exts = frozenset(map(str.lower, exts))
+        self.exts = frozenset(list(map(str.lower, exts)))
 
     def __repr__(self):
         exts = ', '.join(self.exts)

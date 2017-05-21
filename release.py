@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # borrowed from pgcli
 
-from __future__ import print_function
+
 import re
 import ast
 import subprocess
@@ -67,12 +67,12 @@ if __name__ == '__main__':
         subprocess.check_output = lambda x: x
 
     ver = version('flask_transfer/__init__.py')
-    tests = raw_input("Did you remember to run the tests? (y/N) ")
+    tests = input("Did you remember to run the tests? (y/N) ")
     if tests.lower() != 'y':
         sys.exit(1)
 
     print('Releasing Version:', ver)
-    choice = raw_input('Are you sure? (y/N) ')
+    choice = input('Are you sure? (y/N) ')
     if choice.lower() != 'y':
         sys.exit(1)
 

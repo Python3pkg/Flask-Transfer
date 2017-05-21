@@ -1,5 +1,6 @@
 from werkzeug._compat import string_types
 from .exc import UploadError
+import collections
 
 __all__ = ['Transfer']
 
@@ -17,7 +18,7 @@ def _make_destination_callable(dest):
     the destination is returned. Instead, if the object is a string or a
     writable object, it's wrapped in a closure to be used later.
     """
-    if callable(dest):
+    if isinstance(dest, collections.Callable):
         return dest
     elif hasattr(dest, 'write') or isinstance(dest, string_types):
         return _use_filehandle_to_save(dest)
